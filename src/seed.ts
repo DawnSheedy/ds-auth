@@ -1,5 +1,5 @@
-import { Permission } from "../schema/Permission";
-import { User } from "../schema/User";
+import { Permission } from "./schema/Permission";
+import { User } from "./schema/User";
 
 /**
  * Provide initial data for database
