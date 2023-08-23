@@ -11,7 +11,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@dawnsheedy/ds-auth-lib": "1.1.0",
+    "@dawnsheedy/ds-auth-lib": "1.2.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",

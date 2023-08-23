@@ -9,10 +9,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dawnsheedy/ds-auth-lib@1.1.0":
-  version "1.1.0"
-  resolved "https://npm.pkg.github.com/download/@dawnsheedy/ds-auth-lib/1.1.0/add04e1dc53600aae5cfcf549fc6b5d38bddcf44#add04e1dc53600aae5cfcf549fc6b5d38bddcf44"
-  integrity sha512-2GUDbPEf6dz8WyW/ygto6VUn736oa/XWRHbLmlhjFyNw2XBLc6vXndOcUz5a4nlf6kZMEYVg0cayoPMnLie9ag==
+"@dawnsheedy/ds-auth-lib@1.2.0":
+  version "1.2.0"
+  resolved "https://npm.pkg.github.com/download/@dawnsheedy/ds-auth-lib/1.2.0/8318c8654a5ce06ae9c929b723013b7ca97b2291#8318c8654a5ce06ae9c929b723013b7ca97b2291"
+  integrity sha512-1FK686uBBF5Ru/J3w9cOUZJXpOzeKrryY+2u/JsvEkQiSxYb7hLKL3gCwRpWfb7vPdRpbo2iU7xEbmpKNdC8Vg==
   dependencies:
     jsonwebtoken "^9.0.1"
     typescript "^5.1.6"
