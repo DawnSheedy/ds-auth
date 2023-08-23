@@ -1,0 +1,29 @@
+name: Publish ds-auth to DO Container Registry
+on:
+  release:
+    types: [published]
+jobs:
+  build:
+    name: Build and Publish to Github Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Build image
+        run: docker build -t ds-auth .
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Log in to DO Container Registry
+        run: doctl registry login --expiry-seconds 600
+      - name: Tag image
+        run: docker tag ds-auth \
+          registry.digitalocean.com/ds-services-container/ds-auth:${{github.event.inputs.version }}
+      - name: Push image to DO Container Registry
+        run: docker push registry.digitalocean.com/my-sample-registry/ds-auth:${{ env.RELEASE_VERSION }}
