@@ -1,6 +1,6 @@
 import { model, Schema, Types } from "mongoose";
 
-interface IPermission {
+export interface IPermission {
   // Permission Name
   name: string;
   // Permission description
