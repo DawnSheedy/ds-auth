@@ -48,9 +48,9 @@ jobs:
       - name: Authenticate kubectl
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ds-k8s
       - name: Write mongoDb access secret
-        run: "echo 'mongo_uri: ${{ secrets.MONGO_URI }}' > ds-auth/environments/secret.default.yaml"
+        run: "echo 'mongo_uri: \"${{ secrets.MONGO_URI }}\"' > ds-auth/environments/secret.default.yaml"
       - name: Write JWT secret
-        run: "echo 'secret: ${{ secrets.AUTH_SECRET }}' > ds-auth/environments/secret.default.yaml"
+        run: "echo 'secret: \"${{ secrets.AUTH_SECRET }}\"' > ds-auth/environments/secret.default.yaml"
       - name: Helm Deploy
         run: helm upgrade --install --create-namespace -n default --set image.tag=${{ env.RELEASE_VERSION }} --set namespace=default ds-auth ds-auth
         
