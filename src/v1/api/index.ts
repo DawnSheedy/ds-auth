@@ -3,7 +3,6 @@ import { Controller } from "../../types/Controller";
 import { AuthController } from "./AuthController";
 import { registerControllerEndpoints } from "../../util/registerControllerEndpoints";
 import { UserController } from "./UserController";
-import { userIdParamMiddleware } from "../middleware/userIdParamMiddleware";
 import { userAuthenticatedMiddleware } from "@dawnsheedy/ds-auth-lib";
 
 const router = Router();

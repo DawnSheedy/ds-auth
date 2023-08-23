@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM --platform=linux/amd64 node:18-alpine
 
 LABEL author="Dawn Sheedy (dawn@dawnsheedy.com)"
 LABEL version="1.0"
