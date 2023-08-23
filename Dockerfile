@@ -11,10 +11,10 @@ COPY package.json ./
 
 COPY yarn.lock ./
 
-RUN echo $'@dawnsheedy:registry=https://npm.pkg.github.com/\n\
+RUN echo $'@dawnsheedy:registry=https://npm.pkg.github.com/ \n\
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}' > /usr/src/app/.npmrc
 
-RUN echo ""
+RUN echo ./.npmrc
 
 RUN yarn
 
