@@ -3,9 +3,10 @@ import {
   userAuthenticatedMiddleware,
 } from "@dawnsheedy/ds-auth-lib";
 import { Controller } from "../../types/Controller";
-import { compare } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { RequestHandler } from "express";
 import { getUserByEmail } from "../../dbUtils/getUserByEmail";
+import { User } from "../../schema/User";
 
 /**
  * Handler for authentication login.
@@ -77,6 +78,41 @@ const logoutHandler: RequestHandler = (_req, res) => {
 };
 
 /**
+ * Handler for user creation
+ * @param req
+ * @param res
+ * @returns
+ */
+const creationHandler: RequestHandler = async (req, res) => {
+  if (
+    !req.body.email ||
+    !req.body.password ||
+    !req.body.firstName ||
+    !req.body.lastName
+  ) {
+    return res.sendStatus(400);
+  }
+
+  const user = await getUserByEmail(req.body.email.toLowerCase());
+
+  if (user) {
+    return res.sendStatus(403);
+  }
+
+  const password = await hash(req.body.password, 10);
+
+  await User.create({
+    lastName: req.body.lastName,
+    firstName: req.body.firstName,
+    email: req.body.email.toLowerCase(),
+    password,
+    permissions: [],
+  });
+
+  res.sendStatus(200);
+};
+
+/**
  * Controller for authentication endpoints
  */
 export const AuthController: Controller = {
@@ -107,6 +143,12 @@ export const AuthController: Controller = {
       method: "POST",
       middleware: [userAuthenticatedMiddleware],
       handler: logoutHandler,
+    },
+    {
+      name: "User Registration",
+      path: "/",
+      method: "POST",
+      handler: creationHandler,
     },
   ],
 };

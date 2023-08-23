@@ -3,6 +3,8 @@ import { Controller } from "../../types/Controller";
 import { AuthController } from "./AuthController";
 import { registerControllerEndpoints } from "../../util/registerControllerEndpoints";
 import { UserController } from "./UserController";
+import { userIdParamMiddleware } from "../middleware/userIdParamMiddleware";
+import { userAuthenticatedMiddleware } from "@dawnsheedy/ds-auth-lib";
 
 const router = Router();
 
@@ -10,7 +12,12 @@ const v1Controller: Controller = {
   name: "v1 Api Controller",
   endpoints: [
     { name: "Auth Routes", path: "/auth", subController: AuthController },
-    { name: "User Routes", path: "/users", subController: UserController },
+    {
+      name: "User Routes",
+      path: "/users",
+      middleware: [userAuthenticatedMiddleware],
+      subController: UserController,
+    },
   ],
 };
 
