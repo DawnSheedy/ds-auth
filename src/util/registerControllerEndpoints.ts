@@ -34,11 +34,18 @@ export const registerControllerEndpoints = (
     endpoint.name = endpoint.name ?? "Unnamed Endpoint";
     endpoint.method = endpoint.method ?? "GET";
     endpoint.path = endpoint.path ?? "/";
+    endpoint.middleware = endpoint.middleware ?? [];
 
     if (endpoint.handler) {
       console.log(
         `${prefix}┣━ [${endpoint.method} → ${endpoint.path}] Registering ${endpoint.name}`
       );
+
+      endpoint.middleware?.forEach((handler) => {
+        console.log(
+          `${prefix}┣━━ [${handler.name} → ${endpoint.path}] Registering Middleware`
+        );
+      });
 
       (router[endpointMap[endpoint.method]] as any)(
         endpoint.path,

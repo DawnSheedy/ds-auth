@@ -61,7 +61,13 @@ export const tokenRefreshHandler: RequestHandler = (req, res) => {
  */
 
 export const identificationHandler: RequestHandler = (req, res) => {
-  res.json(req.identity);
+  res.json({
+    userId: req.user?.id,
+    userName: req.user?.email,
+    firstName: req.user?.firstName,
+    lastName: req.user?.lastName,
+    permissions: req.user?.permissions.map((perm) => perm.name),
+  });
 };
 /**
  * Request handler for user logout

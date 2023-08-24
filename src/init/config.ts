@@ -3,7 +3,6 @@ import { IPermission, Permission } from "../schema/Permission";
 
 const defaultConfigValues: [string, string][] = [
   ["allowSignup", "true"], // Allows new user signup.
-  ["autoAdmin", "true"], // Makes all new users admin. Once set to false, cannot ever be set back to true.
   ["appTitle", "ds-auth"], // App title
 ];
 

@@ -3,6 +3,7 @@ import {
 } from "@dawnsheedy/ds-auth-lib";
 import { Controller } from "../../types/Controller";
 import { authenticateHandler, tokenRefreshHandler, identificationHandler, logoutHandler, creationHandler } from "./AuthControllerHandlers";
+import { userDbMiddleware } from "../middleware/userDbMiddleware";
 
 /**
  * Controller for authentication endpoints
@@ -26,7 +27,7 @@ export const AuthController: Controller = {
       name: "User Identitifier",
       path: "/identity",
       method: "GET",
-      middleware: [userAuthenticatedMiddleware],
+      middleware: [userAuthenticatedMiddleware, userDbMiddleware],
       handler: identificationHandler,
     },
     {

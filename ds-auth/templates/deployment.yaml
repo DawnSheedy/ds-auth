@@ -74,6 +74,11 @@ spec:
                 configMapKeyRef:
                   name: ds-auth-config
                   key: env
+            - name: ADMIN_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: ds-auth-config
+                  key: admin_email
             - name: SECRET
               valueFrom:
                 secretKeyRef:

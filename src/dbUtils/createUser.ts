@@ -21,7 +21,7 @@ export const createUser = async (
 
   const permsToAdd: ObjectId[] = [];
 
-  if ((await getConfigValue("autoAdmin")) === "true") {
+  if (email === process.env.ADMIN_EMAIL) {
     const adminPerm = await getPermIdByName("PERM_ADMIN");
     if (adminPerm) {
       permsToAdd.push(adminPerm);

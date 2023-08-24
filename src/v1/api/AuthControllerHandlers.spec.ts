@@ -90,11 +90,12 @@ describe("Auth Controller Handlers", () => {
   describe("Identity endpoint", () => {
     it("should return user identity", async () => {
       const json = jest.fn();
-      const identity = {} as UserIdentity;
+      const user = await createUser('test', 'test', 'test', 'test');
 
-      identificationHandler({ identity } as any, { json } as any, () => {});
+      identificationHandler({ user } as any, { json } as any, () => {});
 
-      expect(json).toBeCalledWith(identity);
+      expect(json).toBeCalled();
+      expect(json.mock.calls[0][0].firstName).toEqual(user.firstName);
     });
   });
 

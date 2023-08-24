@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-interface IAppConfigEntry {
+export interface IAppConfigEntry {
   key: string;
   value: string;
 }
