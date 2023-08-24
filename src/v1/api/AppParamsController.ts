@@ -18,6 +18,7 @@ export const appParamRetriever: RequestHandler = async (_req, res) => {
     config[configEntry.key] = configEntry.value;
   });
   config["appVersion"] = packageJson.version;
+  config["environment"] = process.env.ENV ?? 'not-defined';
   res.json(config);
 };
 
