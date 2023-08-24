@@ -1,9 +1,7 @@
 name: Publish ds-auth to k8s staging
 on:
-  workflow_run:
-    workflows: [Run Tests]
-    types:
-      - completed
+  push:
+    branches: [main]
 
 jobs:
   build:
@@ -40,5 +38,8 @@ jobs:
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ds-k8s
       - name: Write secrets
         run: "echo $'mongo_uri: \"${{ secrets.MONGO_URI_STG }}\"\nsecret: \"${{ secrets.AUTH_SECRET_STG }}\"' > ds-auth/environments/secret.stg.yaml"
+      - name: Helm Uninstall Old Version
+        run: helm uninstall ds-auth -n stg
       - name: Helm Deploy
+        if: always()
         run: helm upgrade --install --create-namespace -n stg --set image.tag=latest --set namespace=stg ds-auth ds-auth
