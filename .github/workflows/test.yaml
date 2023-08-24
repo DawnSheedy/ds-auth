@@ -16,10 +16,5 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Pull docker compose prereq
-        run: docker compose pull
-      - name: Enable layer cache service
-        uses: satackey/action-docker-layer-caching@v0.0.11
-        continue-on-error: true
       - name: Run tests
         run: GH_TOKEN=${{ secrets.GH_NPM_KEY }} DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose -f docker-compose.test.yaml up --build --abort-on-container-exit --exit-code-from unit-test
