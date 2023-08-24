@@ -4,7 +4,7 @@ import { AppConfigEntry } from "../../schema/AppConfigEntry";
 import packageJson from "../../../package.json";
 import { appParamIdMiddleware } from "../middleware/appParamIdMiddleware";
 import { setConfigValue } from "../../dbUtils/setConfigValue";
-import { userHasPermissionMiddleware } from "@dawnsheedy/ds-auth-lib";
+import { userAuthenticatedMiddleware, userHasPermissionMiddleware } from "@dawnsheedy/ds-auth-lib";
 
 /**
  * Retrieve list of all defined app params
@@ -63,14 +63,14 @@ export const AppParamsController: Controller = {
       name: "Patch App Param",
       path: "/:appParamId",
       method: "PATCH",
-      middleware: [userHasPermissionMiddleware(["PERM_ADMIN"])],
+      middleware: [userAuthenticatedMiddleware, userHasPermissionMiddleware(["PERM_ADMIN"])],
       handler: appParamPatch,
     },
     {
       name: "Patch App Param",
       path: "/",
       method: "POST",
-      middleware: [userHasPermissionMiddleware(["PERM_ADMIN"])],
+      middleware: [userAuthenticatedMiddleware, userHasPermissionMiddleware(["PERM_ADMIN"])],
       handler: appParamPost,
     },
   ],
