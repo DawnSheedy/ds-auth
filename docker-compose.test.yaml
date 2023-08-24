@@ -8,7 +8,7 @@ services:
   unit-test:
     build: .
     args:
-      - gh_token=${GH_SECRET}
+      - gh_token=${GH_TOKEN}
     command: ["yarn", "jest:run"]
     env_file:
       - ./test.env
