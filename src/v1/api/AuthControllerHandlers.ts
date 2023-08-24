@@ -3,6 +3,7 @@ import { compare } from "bcrypt";
 import { RequestHandler } from "express";
 import { getUserByEmail } from "../../dbUtils/getUserByEmail";
 import { createUser } from "../../dbUtils/createUser";
+import { getConfigValue } from "../../dbUtils/getConfigValue";
 
 /**
  * Handler for authentication login.
@@ -94,6 +95,12 @@ export const creationHandler: RequestHandler = async (req, res) => {
     !req.body.lastName
   ) {
     return res.sendStatus(400);
+  }
+
+  const allowSignups = (await getConfigValue("allowSignup")) === "true";
+
+  if (!allowSignups) {
+    return res.sendStatus(403);
   }
 
   const email = req.body.email.toLowerCase();

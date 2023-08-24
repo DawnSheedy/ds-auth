@@ -8,6 +8,7 @@ import {
   tokenRefreshHandler,
 } from "./AuthControllerHandlers";
 import { getUserByEmail } from "../../dbUtils/getUserByEmail";
+import { setConfigValue } from "../../dbUtils/setConfigValue";
 
 describe("Auth Controller Handlers", () => {
   beforeAll(async () => {
@@ -90,7 +91,7 @@ describe("Auth Controller Handlers", () => {
   describe("Identity endpoint", () => {
     it("should return user identity", async () => {
       const json = jest.fn();
-      const user = await createUser('test', 'test', 'test', 'test');
+      const user = await createUser("test", "test", "test", "test");
 
       identificationHandler({ user } as any, { json } as any, () => {});
 
@@ -177,6 +178,28 @@ describe("Auth Controller Handlers", () => {
       );
 
       expect(sendStatus).toHaveBeenCalledWith(403);
+    });
+
+    it("should 403 if signup is disabled", async () => {
+      await setConfigValue("allowSignup", "false");
+
+      const sendStatus = jest.fn();
+
+      await creationHandler(
+        {
+          body: {
+            email: "unique@example.com",
+            password: "test",
+            firstName: "test",
+            lastName: "test",
+          },
+        } as any,
+        { sendStatus } as any,
+        () => {}
+      );
+
+      expect(sendStatus).toHaveBeenCalledWith(403);
+      await setConfigValue("allowSignup", "true");
     });
 
     it("should 400 if request is missing data", async () => {
