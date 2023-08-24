@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: registry.digitalocean.com/ds-services-container/ds-auth
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   tag: ''
 
 imagePullSecrets:
