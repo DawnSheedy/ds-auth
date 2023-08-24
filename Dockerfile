@@ -18,6 +18,8 @@ COPY .npmr[c] .npmrc
 
 RUN yarn
 
+RUN rm .npmrc
+
 COPY jest.config.js ./
 
 COPY src/ ./src/
