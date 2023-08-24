@@ -22,4 +22,4 @@ jobs:
         uses: satackey/action-docker-layer-caching@v0.0.11
         continue-on-error: true
       - name: Run tests
-        run: GH_TOKEN=${{ secrets.GH_NPM_KEY }} docker compose -f docker-compose.test.yaml up --build --abort-on-container-exit --exit-code-from unit-test
+        run: GH_TOKEN=${{ secrets.GH_NPM_KEY }} DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose -f docker-compose.test.yaml up --build --abort-on-container-exit --exit-code-from unit-test
