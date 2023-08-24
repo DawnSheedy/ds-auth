@@ -6,9 +6,6 @@ jobs:
   build:
     name: Build and Publish to Container Registry
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: read
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -18,7 +15,7 @@ jobs:
         uses: satackey/action-docker-layer-caching@v0.0.11
         continue-on-error: true
       - name: Build image
-        run: docker build --platform=linux/amd64 -t ds-auth . --build-arg gh_token=${{ secrets.GITHUB_TOKEN }}
+        run: docker build --platform=linux/amd64 -t ds-auth . --build-arg gh_token=${{ secrets.GH_NPM_KEY }}
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
