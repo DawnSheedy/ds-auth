@@ -54,6 +54,8 @@ ingress:
           pathType: Prefix
         - path: /api/v1/users
           pathType: Prefix
+        - path: /api/v1/appinfo
+          pathType: Prefix
   tls:
    - secretName: ds-auth-tls
      hosts:
