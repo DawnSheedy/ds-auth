@@ -1,7 +1,9 @@
 name: Publish ds-auth to k8s staging
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: [Run Tests]
+    types:
+      - completed
 
 jobs:
   build:
