@@ -16,6 +16,6 @@ const userSchema = new Schema<IUser>({
   permissions: [{ type: Types.ObjectId, ref: "Permission" }],
 });
 
-const User = model<IUser>('User', userSchema);
+const User = model<IUser>("User", userSchema);
 
-export { User }
+export { User };

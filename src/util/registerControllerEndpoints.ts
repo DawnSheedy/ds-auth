@@ -53,7 +53,7 @@ export const registerControllerEndpoints = (
       );
 
       const newRouter = Router();
-      endpoint.middleware?.forEach((middleware) => router.use(middleware));
+      endpoint.middleware?.forEach((middleware) => newRouter.use(middleware));
       registerControllerEndpoints(newRouter, endpoint.subController, newPrefix);
       router.use(endpoint.path, newRouter);
     }

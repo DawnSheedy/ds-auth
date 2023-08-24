@@ -11,17 +11,11 @@ jobs:
       packages: read
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      # Setup .npmrc file to fetch private packages
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@dawnsheedy'
       - name: Build image
-        run: docker build -t ds-auth . --build-arg gh_token=${{ secrets.GITHUB_TOKEN }}
+        run: docker build --platform=linux/amd64 -t ds-auth . --build-arg gh_token=${{ secrets.GITHUB_TOKEN }}
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
@@ -39,7 +33,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Install doctl

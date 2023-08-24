@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import "../schema";
+import "./config";
+import { seedConfigValues } from "./config";
 
 const mongoURI = process.env.MONGO_URI;
 
@@ -6,6 +9,13 @@ const mongoURI = process.env.MONGO_URI;
 if (mongoURI) {
   mongoose.connect(mongoURI);
 
+  mongoose.connection.on("connected", () => {
+    console.log("🛰️ Connected to Database");
+
+    if (!process.env.NO_SEED) {
+      seedConfigValues();
+    }
+  });
   // Log connection errors
   mongoose.connection.on("error", (error) => {
     console.error("🥭 MongoDB Connection Error!", error);

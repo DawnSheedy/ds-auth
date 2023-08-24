@@ -5,10 +5,9 @@ NAMESPACE ?= $(shell bash -c 'read -p "Select Namespace: " namespace; echo $$nam
 build-image:
 	docker build -t ${APPNAME}:${TAG} .
 
-push-image: STAG = ${TAG}
 push-image:
-	docker tag ${APPNAME}:${STAG} registry.digitalocean.com/ds-services-container/${APPNAME}:${STAG}
-	docker push registry.digitalocean.com/ds-services-container/${APPNAME}:${STAG}
+	docker tag ${APPNAME}:${TAG} registry.digitalocean.com/ds-services-container/${APPNAME}:${TAG}
+	docker push registry.digitalocean.com/ds-services-container/${APPNAME}:${TAG}
 
 dev-force: dev-destroy
 dev-force: dev
@@ -21,9 +20,20 @@ dev: helm-deploy
 dev-destroy: NAMESPACE = dev
 dev-destroy: helm-destroy
 
-helm-deploy: SNAMESPACE = ${NAMESPACE}
 helm-deploy:
-	helm upgrade --install --create-namespace -n ${SNAMESPACE} --set image.tag=${TAG} --set namespace=${SNAMESPACE} ${APPNAME} ${APPNAME}
+	helm upgrade --install --create-namespace -n ${NAMESPACE} --set image.tag=${TAG} --set namespace=${NAMESPACE} ${APPNAME} ${APPNAME}
 
 helm-destroy:
 	helm uninstall -n ${NAMESPACE} ${APPNAME}
+
+test: test-teardown-and-rebuild
+test: test-raw
+
+test-teardown-and-rebuild:
+	docker compose -f docker-compose.test.yaml down
+	docker compose -f docker-compose.test.yaml build
+
+test-raw:
+	docker-compose -f docker-compose.test.yaml up \
+    --abort-on-container-exit \
+    --exit-code-from unit-test

@@ -10,7 +10,7 @@ export const getUserByEmail = async (email: string) => {
   const user = await User.findOne({ email })
     .populate<{
       permissions: IPermission[];
-    }>("Permission")
+    }>("permissions")
     .exec();
   return user;
 };

@@ -10,7 +10,7 @@ export interface IPermission {
 }
 
 const permissionSchema = new Schema<IPermission>({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   description: { type: String, required: true },
   children: [{ type: Types.ObjectId, ref: "Permission" }],
 });

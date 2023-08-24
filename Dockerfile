@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 node:18-alpine
+FROM node:18-alpine
 
 ARG gh_token
 
@@ -17,6 +17,8 @@ RUN echo $'@dawnsheedy:registry=https://npm.pkg.github.com/ \n\
 COPY .npmr[c] .npmrc
 
 RUN yarn
+
+COPY jest.config.js ./
 
 COPY src/ ./src/
 
