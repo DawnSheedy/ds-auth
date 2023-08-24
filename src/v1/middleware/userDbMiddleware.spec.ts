@@ -40,6 +40,6 @@ describe("DB User retrieval middleware", () => {
     );
 
     expect(sendStatus).toHaveBeenCalledWith(401);
-    expect(clearCookie).toHaveBeenCalledWith("authToken");
+    expect(clearCookie).toHaveBeenCalledTimes(2);
   });
 });

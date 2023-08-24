@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { User } from "../../schema/User";
 import { IPermission } from "../../schema/Permission";
+import { clearAuthCookies } from "@dawnsheedy/ds-auth-lib";
 
 /**
  * Middleware to inject DB user into request context
@@ -15,7 +16,7 @@ export const userDbMiddleware: RequestHandler = async (req, res, next) => {
   }>("permissions");
 
   if (!user) {
-    res.clearCookie("authToken");
+    clearAuthCookies(res);
     return res.sendStatus(401);
   }
 

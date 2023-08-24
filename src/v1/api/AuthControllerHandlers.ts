@@ -1,4 +1,7 @@
-import { getJWTFromToken } from "@dawnsheedy/ds-auth-lib";
+import {
+  clearAuthCookies,
+  issueCookiesForToken,
+} from "@dawnsheedy/ds-auth-lib";
 import { compare } from "bcrypt";
 import { RequestHandler } from "express";
 import { getUserByEmail } from "../../dbUtils/getUserByEmail";
@@ -31,15 +34,16 @@ export const authenticateHandler: RequestHandler = async (req, res) => {
     return res.sendStatus(403);
   }
 
-  const token = getJWTFromToken({
-    userId: user.id,
-    userName: user.email,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    permissions: user.permissions.map((perm) => perm.name),
-  });
-
-  res.cookie("authToken", token);
+  const token = issueCookiesForToken(
+    {
+      userId: user.id,
+      userName: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      permissions: user.permissions.map((perm) => perm.name),
+    },
+    res
+  );
 
   res.json({ access_token: token, expiresIn: process.env.TOKEN_LENGTH });
 };
@@ -50,8 +54,7 @@ export const authenticateHandler: RequestHandler = async (req, res) => {
  */
 
 export const tokenRefreshHandler: RequestHandler = (req, res) => {
-  const token = getJWTFromToken(req.identity!);
-  res.cookie("authToken", token);
+  const token = issueCookiesForToken(req.identity!, res);
 
   res.json({ access_token: token, expiresIn: process.env.TOKEN_LENGTH });
 };
@@ -77,7 +80,7 @@ export const identificationHandler: RequestHandler = (req, res) => {
  */
 
 export const logoutHandler: RequestHandler = (_req, res) => {
-  res.clearCookie("authToken");
+  clearAuthCookies(res);
   res.sendStatus(200);
 };
 /**

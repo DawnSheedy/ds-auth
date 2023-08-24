@@ -107,7 +107,7 @@ describe("Auth Controller Handlers", () => {
 
       logoutHandler({} as any, { clearCookie, sendStatus } as any, () => {});
 
-      expect(clearCookie).toBeCalledWith("authToken");
+      expect(clearCookie).toBeCalledTimes(2);
       expect(sendStatus).toBeCalledWith(200);
     });
   });
