@@ -33,6 +33,7 @@ test-teardown-and-rebuild:
 	docker compose -f docker-compose.test.yaml down
 	docker compose -f docker-compose.test.yaml build
 
+test-raw: GH_SECRET = ''
 test-raw:
 	docker-compose -f docker-compose.test.yaml up \
     --abort-on-container-exit \

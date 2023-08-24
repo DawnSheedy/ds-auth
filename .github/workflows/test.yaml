@@ -8,11 +8,13 @@ on:
 
 jobs:
   test:
+    name: 'Run Unit Tests in Docker'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build image
-        run: docker build --platform=linux/amd64 -t ds-auth . --build-arg gh_token=${{ secrets.GITHUB_TOKEN }}
       - name: Run tests
-        run: make test-raw
+        run: GH_TOKEN=${{ secrets.GITHUB_TOKEN }} docker compose -f docker-compose.test.yaml up --build --abort-on-container-exit --exit-code-from unit-test
